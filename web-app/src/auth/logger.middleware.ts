@@ -16,6 +16,5 @@ export class LoggerMiddleware implements NestMiddleware{
         next();
     }else
     {res.end("Please Login Again !!");}
-    
-}
+    }
 }
