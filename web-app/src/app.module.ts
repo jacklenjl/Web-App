@@ -2,20 +2,16 @@ import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { LoggerMiddleware } from './auth/logger.middleware';
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
+
+import {MongooseModule} from '@nestjs/mongoose';
+
+require('dotenv').config()
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule,MongooseModule.forRoot(process.env.mongoURI, { useNewUrlParser: true })],
   controllers: [AppController],
-  providers: [AppService,AuthService],
+  providers: [AppService],
 })
 export class AppModule {
-configure(consumer:MiddlewareConsumer){
-consumer
-.apply(LoggerMiddleware)
-.forRoutes(AuthController);
-}
 
 }

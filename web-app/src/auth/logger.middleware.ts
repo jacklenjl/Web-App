@@ -4,22 +4,18 @@ import {AuthService} from "./auth.service";
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware{
     constructor(
-        private readonly authService: AuthService
+        private readonly usersService: AuthService
     ){}
-use(req: Request,res:Response,next:() =>void){
-    //console.log("called middleware"+req.url);
+    async use(req: Request,res:Response,next:() =>void){
     let payload=req.headers.authorization;
-    //console.log(payload);
-    let ff=payload.split(" ");
-    payload=this.authService.findOne(ff[1]);
-    //console.log("2222",payload)
-    if(payload==='valid')
-    {
-        //console.log("cool");
-    next();}
-    else
-    {
-        res.end("error");
-    }
+    let head=payload.split(" ");
+    let  payloadObj=await this.usersService.findOne(head[1]);
+    let resObj=JSON.stringify(payloadObj);
+    let validate=JSON.stringify('valid')
+    if(resObj===validate){
+        next();
+    }else
+    {res.end("Please Login Again !!");}
+    
 }
 }

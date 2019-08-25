@@ -1,4 +1,4 @@
-import { Controller,Get } from '@nestjs/common';
+import { Controller,Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -7,10 +7,12 @@ export class AuthController {
         private readonly authService: AuthService
     ){}
 
-@Get('test')
-checkhello()
+@Post('register')
+regUser(@Body() dto)
 {
-return  this.authService.checkhellomain();   
+    return this.authService.registerUser(dto);
 }
+
+
 
 }
