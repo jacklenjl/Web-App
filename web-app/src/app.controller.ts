@@ -6,14 +6,22 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('login-form')
+  @Render('home')
   getHello(): any {
+    return {head_val : this.appService.getHello()};
+  }
+  
+  @Get('logform')
+  @Render('login-form')
+  getlogform(): any {
     return {head_val : this.appService.getHello()};
   }
   
   @Get('check')
   @Render('logout')
-  getlog(): any {
-    return 'redo';
-  }
+  getlog(): any {}
+  
+  @Get('menu')
+  @Render('menu')
+  getmenu(): any {}
 }

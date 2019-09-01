@@ -10,8 +10,10 @@ export class LoggerMiddleware implements NestMiddleware {
 
 
     async use(req: Request, res: Response, next: () => void) {
+        
         var cook = req.cookies;
         console.log(cook.Authorization);
+       
         if (cook) {
             let payload = cook.Authorization;
             let head;
@@ -32,7 +34,7 @@ export class LoggerMiddleware implements NestMiddleware {
         else {
             res.render('error.hbs');
         }
-
     }
+    
 
 }

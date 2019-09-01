@@ -18,7 +18,7 @@ export class AuthModule {
       .exclude(
         { path: 'auth/register', method: RequestMethod.POST },
         { path: 'auth/login', method: RequestMethod.POST },
-        { path: 'auth/logform', method: RequestMethod.GET },
+         //{ path: 'auth/kill', method: RequestMethod.GET },
       )
       .forRoutes(AuthController);
   }

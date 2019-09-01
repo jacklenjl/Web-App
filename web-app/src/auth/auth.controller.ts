@@ -21,18 +21,19 @@ export class AuthController {
     //     return 'welcome';
     // }
 
-    
+
     @Post('login')
     async set(@Body() dto, @Res() res: any): Promise<any> {
 
         var val: any = {};
         val = await this.authService.loginUser(dto);
-        //    console.log("lllllll",val);
-        if(val[0]){
-        res.cookie('Authorization', `Bearer ${val[0].tokenval} email ${val[0].email}`, { secure: false });
-        res.end(`welcome`);}
-        else{
-            res.end("Wrong email");
+        console.log("lllllll", val);
+        if (val != undefined && val[0]) {
+            res.cookie('Authorization', `Bearer ${val[0].tokenval} email ${val[0].email}`, { secure: false });
+            res.end(`welcome`);
+        }
+        else {
+            res.end("Wrong email or password");
         }
 
     }
@@ -46,12 +47,12 @@ export class AuthController {
     @ClearCookies('Authorization')
     @Get('kill')
     @Render('logout')
-    kill(@Res() res: any,@Cookies() cookies) {
+    kill(@Res() res: any, @Cookies() cookies) {
         return { message: 'cookies killed!' };
-       
+
     }
 
 
-   
+
 
 }

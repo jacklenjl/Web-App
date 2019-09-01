@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Users } from '../database/interfaces/users.interface';
+import { checkServerIdentity } from 'tls';
 const bcrypt = require('bcrypt');
 require('dotenv').config()
 const saltRounds = parseInt(process.env.saltRounds);
@@ -13,29 +14,52 @@ export class AuthService {
         @InjectModel('Users') private readonly userModel: Model<Users>
     ) { }
 
-    async loginUser(dto: any):Promise<string> {
-        console.log("called",dto)
-        let val= await this.userModel.find({ email: dto.mail });
-        
-        
-        // bcrypt.compare(myPlaintextPassword, hash, function(err, res) {
-        //     // res == true
-        // });
-        return val;
+    async loginUser(dto: any): Promise<string> {
+        console.log("called", dto)
+        let val = await this.userModel.find({ email: dto.mail });
+        console.log('vallll', val)
+        if (val.length) {
+            //console.log(val[0].password);
+            //let chk=await this.passwordCheck(dto.pass,val[0].password);
+            let chk = await new Promise((resolve, reject) => {
+                bcrypt.compare(dto.pass, val[0].password, function (err, hash) {
+                    if (err) reject(err)
+                    resolve(hash)
+                });
+            })
+            return chk ? val : null;
+        } else {
+            return null;
+        }
+
+
     }
 
-    async registerUser(dto: any) {
+    async passwordCheck(plainpass, dbpass): Promise<any> {
+        new Promise(function (resolve, reject) {
+            bcrypt.compare(plainpass, dbpass, function (err, res) {
+                if (err)
+                    reject(err);
+                resolve(res);
+            });
+        })
+
+    }
+
+    async registerUser(dto: any): Promise<any> {
         console.log(dto, saltRounds);
         let obj = new this.userModel(dto);
-
-        bcrypt.hash(dto.password, saltRounds, function (err, hash) {
+        let val;
+        obj.tokenval = await this.tokenGenerator();
+        bcrypt.hash(dto.password, saltRounds, async function (err, hash) {
             // Store hash in your password DB.
             obj.password = hash;
+            console.log(obj);
+            val = await obj.save(dto);
         });
 
-        obj.tokenval = await this.tokenGenerator();
-        console.log(obj);
-        return await obj.save(dto);
+
+        return "Registered Sucessfully";
     }
 
 
