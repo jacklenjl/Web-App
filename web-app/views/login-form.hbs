@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    {{!-- <script type="text/javascript" language="javascript" src="javascripts/jquery.js" ></script>
+<script type="text/javascript" language="javascript" src="javascripts/logscript.js" ></script> --}}
+</head>
+
+<body>
+    <h1>Welcome to login of {{head_val}}</h1>
+
+    <form id="logf" action="/auth/login" method="POST">
+        <fieldset>
+            <legend>
+                <h2>Login:</h2>
+            </legend>
+            <table>
+                <tr>
+                    <p>
+                        <td><label>Email:</label></td>
+                        <td><input type="text" class="form_text" id="imail" name="mail"></td>
+                        <td><span class="error_form" id="mail_error_mesg"></span></td>
+                    </p>
+                </tr>
+                <tr>
+                    <p>
+                        <td><label>Password:</label></td>
+                        <td><input type="password" id="ipass" name="pass" /></td>
+                        <td><span class="error_form" id="pass_error_mesg"></span></td>
+                    </p>
+                </tr>
+                <tr>
+                    <p>
+                        <td><input type="submit" id="isubmit" value="Submit" /> </td>
+                        <td><input type="reset" id="ireset" value="Clear" /></td>
+                    </p>
+                </tr>
+            </table>
+        </fieldset>
+</body>
+
+</html>
