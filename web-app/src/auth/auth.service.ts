@@ -3,10 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Users } from '../database/interfaces/users.interface';
 import { checkServerIdentity } from 'tls';
+import { resolve } from 'dns';
 const bcrypt = require('bcrypt');
 require('dotenv').config()
 const saltRounds = parseInt(process.env.saltRounds);
 var randomString = require('random-string');
+var waterfall = require('async-waterfall');
 @Injectable()
 export class AuthService {
 
@@ -14,32 +16,51 @@ export class AuthService {
         @InjectModel('Users') private readonly userModel: Model<Users>
     ) { }
 
-    async loginUser(dto: any): Promise<string> {
-        console.log("called", dto)
-        let val = await this.userModel.find({ email: dto.mail });
-        console.log('vallll', val)
-        if (val.length) {
-            //console.log(val[0].password);
-            //let chk=await this.passwordCheck(dto.pass,val[0].password);
-            let chk = await new Promise((resolve, reject) => {
-                bcrypt.compare(dto.pass, val[0].password, function (err, hash) {
-                    if (err) reject(err)
-                    resolve(hash)
-                });
-            })
-            return chk ? val : null;
-        } else {
-            return null;
-        }
+    async loginUser(dto: any):Promise<any>{
+     return await new Promise(async (resolve,reject)=>{
+            waterfall([
+            async (cb)=>{    console.log("called", dto)
+            let val = await this.userModel.find({ email: dto.mail });
+            console.log('vallll', val)
+            return cb(null,val)
+            },
 
+            async (val,cb)=>{
+            if (val.length) {
+                let chk = await this.passwordCheck(dto.pass, val[0].password);
+                // new Promise((resolve, reject) => {
+                //     bcrypt.compare(dto.pass, val[0].password, function (err, hash) {
+                //         if (err) reject(err)
+                //         resolve(hash)
+                //     });
+                // })
 
+                console.log("chkkkk",chk);
+                return chk ? cb(null,val) : cb(null);
+            } else {
+                return cb(null);
+            }
+            },
+            ],(err,res)=>{
+                console.log("rrrrr",res)
+                if(err)
+                reject(err);
+                resolve(res);
+            
+            });
+        
+        
+        })
     }
+    
+
 
     async passwordCheck(plainpass, dbpass): Promise<any> {
-        new Promise(function (resolve, reject) {
+       return new Promise(function (resolve, reject) {
             bcrypt.compare(plainpass, dbpass, function (err, res) {
-                if (err)
-                    reject(err);
+                console.log("this is password check",res,err)
+                if(err)
+                reject(err);
                 resolve(res);
             });
         })
