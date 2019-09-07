@@ -1,0 +1,124 @@
+
+<html>
+<head>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+{{!-- <script type="text/javascript" language="javascript" src="javascripts/jquery.js" ></script> --}}
+<!--<script type="text/javascript" language="javascript" src="javascript/script.js" ></script>-->
+<script>
+     //$("#ipostcomment").css("visibility", "hidden");
+     function clearfield()
+     {
+
+     document.getElementById("ipostcomment").value = "";
+     document.getElementById("itext").value = "";
+     }
+     function app_data2()
+     {
+        var pattern=$("#ipostcomment").val();
+        var $ilist=$('#icomm').hide();
+        $ilist.append('<li >'+pattern+'</li>');
+        var checkme=$("#icomm li:last").text();
+        $.ajax({
+    type:'POST',
+    url:'/testweb/processcom.php',
+    data:{'parent': checkme},
+    success:function(data){
+      console.log(data);  
+    }
+});
+
+     }
+     function  app_data()
+  {
+   
+    var $ilist=$('#icomm').hide();
+    //var $ipostcom=$('#ipostcomment').hide();
+    //$("#ipostcomment").hide();
+    //$("testthis").hide();
+   // $("#btnupper").hide();
+   
+
+    var $ilist2=$('#ico');
+   var pattern=$("#itext").val();
+  // var test=makeCounter();
+   //alert(pattern);
+ // $ilist.append( '<li>'+pattern+'</li>'+'<li><textarea rows="4" cols="30" name="comment" id="itext"></textarea></li>');
+  $ilist.append('<li >'+pattern+'</li>');
+  var checkme=$("#icomm li:last").text();
+  //console.log(checkme);
+  $.ajax({
+    type:'POST',
+    url:'/testweb/processcom.php',
+    data:{'parent': checkme},
+    success:function(data){
+      console.log(data);  
+    }
+});
+
+setInterval(function(){
+    $.ajax({
+    type:'POST',
+    url:'/testweb/newsfeed.php',
+    success:function(data){
+
+        if(data.length)
+{        $ilist2.append('<li >'+data+'</li>');
+    $('#ipostcomment').show();
+    $("#btnupper").show();
+    $('#btnupper2').show();
+}
+
+
+}
+});
+},500);}
+  
+
+
+
+//setInterval(function(){
+
+//},3000);}
+
+
+
+    </script>
+</head>
+<body>
+
+<ul id="icomm" style="list-style-type:none;"></ul>
+<ul id="ico" style="list-style-type:none;"></textarea></ul>
+
+<ul id="testthis" style="list-style-type:none;">
+<li><textarea rows="4" cols="50" name="comment" id="ipostcomment" style="display:none;"></textarea></li>
+<li>
+    <input type="button" value="Comment" id="btnupper" style="display:none;" onclick="app_data2()"/>
+    <input type="button" value="Clear" style="display:none;" id="btnupper2" onclick="clearfield()"/>
+</li>
+
+</ul>
+
+
+
+<fieldset>
+<legend><h2>Comment:</h2></legend>
+<table>
+
+<tr><td><textarea rows="4" cols="50" name="post" id="itext"></textarea></td></tr>
+<tr>
+<td>
+<input type="button" value="Post" onclick="app_data()" />
+<input type="button" value="Clear" onclick="clearfield()"/>
+
+<input type="submit" value="logout" onclick="location.href = 'logout.php';"/></td>
+</tr>
+
+</table>
+</fieldset>
+
+
+</body>
+</html>

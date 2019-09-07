@@ -1,0 +1,55 @@
+<html>
+    <head>
+ <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  </head>    
+<body>
+
+
+
+<form id="regForm"  action="/auth/register" method="POST">
+    <fieldset>
+    <legend><h1>Edit your Profile</h1></legend>
+    <table>
+    <tr>
+    <p>
+    <td><label>Firstname:</label></td>
+    <td><input type="text" class="form_text" id="ifuser" name="fuser" value="{{head_val.firstName}}"/></td>
+    <td><span class="error_form" id="ferror_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>Lastname:</label></td>
+    <td><input type="text" class="form_text" id="iluser" name="luser" value="{{head_val.lastName}}"/></td>
+    <td><span class="error_form" id="lerror_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>Phone:</label></td>
+    <td><input type="text" class="form_text" id="iphno" name="phno" value="{{head_val.phone}}"/></td>
+    <td><span class="error_form" id="phone_error_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+        <input type="hidden" name="useID" value="{{head_val._id}}">
+    <td><input type="submit" id="ibtn" value="Submit"/> </td> 
+    <td><input type="reset" id="ibtn" value="Clear"/></td>     
+    <td>
+    
+    </td>
+    </p>
+    </tr>
+    </table>
+    </fieldset>   
+           
+</form>
+<form action="logout.php">
+    <input type="submit" value="logout" />
+    </form>    
+
+</body>

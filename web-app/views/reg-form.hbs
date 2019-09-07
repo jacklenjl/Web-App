@@ -1,0 +1,66 @@
+<html>
+    <head>
+<script type="text/javascript" language="javascript" src="javascripts/jquery.js" ></script>
+<script type="text/javascript" language="javascript" src="javascripts/script.js" ></script>
+</head>
+<body>
+       
+    <form id="regForm"  action="/auth/register" method="POST">
+    <fieldset>
+    <legend><h2>Register:</h2></legend>
+    <table>
+    <tr>
+    <p>
+    <td><label>Firstname:</label></td>
+    <td><input type="text" class="form_text" id="ifuser" name="fuser"/></td>
+    <td><span class="error_form" id="ferror_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>Lastname:</label></td>
+    <td><input type="text" class="form_text" id="iluser" name="luser"/></td>
+    <td><span class="error_form" id="lerror_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>Phone:</label></td>
+    <td><input type="text" class="form_text" id="iphno" name="phno"/></td>
+    <td><span class="error_form" id="phone_error_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>Email:</label></td>
+    <td><input type="text" class="form_text" id="imail" name="mail"></td>
+    <td><span class="error_form" id="mail_error_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>Password:</label></td>
+    <td><input type="password" id="ipass" name="pass"/></td>
+    <td><span class="error_form" id="pass_error_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><label>ConfirmPassword:</label></td>
+    <td><input type="password" id="icpass" name="cpass"/></td>
+    <td><span class="error_form" id="cpass_error_mesg"></span></td>
+    </p>
+    </tr>
+    <tr>
+    <p>
+    <td><input type="submit" id="ibtn" value="Submit"/> </td> 
+    <td><input type="reset" id="ibtn" value="Clear"/></td>     
+    </p>
+    </tr>
+    </table>
+    </fieldset>               
+</form>
+
+</body>
+
+</html>

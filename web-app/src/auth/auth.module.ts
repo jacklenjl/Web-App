@@ -5,10 +5,12 @@ import { LoggerMiddleware } from './logger.middleware';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Module, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { UsersSchema } from '../database/schemas/users.schema';
+import { databaseModule } from '../database/database.module';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Users', schema: UsersSchema }])],
+  imports: [databaseModule],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService],
+  exports:[AuthService]
 
 })
 export class AuthModule {
