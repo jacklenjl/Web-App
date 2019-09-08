@@ -22,7 +22,7 @@ export class AuthModule {
         { path: 'auth/login', method: RequestMethod.POST },
          //{ path: 'auth/kill', method: RequestMethod.GET },
       )
-      .forRoutes(AuthController);
+      .forRoutes(AuthController,);
   }
 
 

@@ -1,13 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Users } from '../database/interfaces/users.interface';
-import { checkServerIdentity } from 'tls';
-import { resolve } from 'dns';
-import { async } from 'rxjs/internal/scheduler/async';
 import { rejects } from 'assert';
+import { ApiResponse } from '../response';
+var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-require('dotenv').config()
 const saltRounds = parseInt(process.env.saltRounds);
 var randomString = require('random-string');
 var waterfall = require('async-waterfall');
@@ -25,12 +23,13 @@ export class AuthService {
                     console.log("called", dto)
                     let val = await this.userModel.find({ email: dto.mail });
                     console.log('vallll', val)
-                    return cb(null, val)
+                    return cb(null,val)
                 },
 
                 async (val, cb) => {
+                    console.log("val of 2",val.length)
                     if (val.length) {
-                        console.log("this is the got value:",val)
+                        console.log("this is the got value:", val)
                         let chk = await this.passwordCheck(dto.pass, val[0].password);
                         console.log("chkkkk", chk);
                         return chk ? cb(null, val) : cb(null);
@@ -40,8 +39,8 @@ export class AuthService {
                 },
             ], (err, res) => {
                 console.log("rrrrr", res)
-                if (err)
-                    reject(err);
+                // if (err)
+                //     reject(err);
                 resolve(res);
 
             });
@@ -65,46 +64,59 @@ export class AuthService {
     }
 
     async registerUser(dto: any): Promise<any> {
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
+            console.log(dto);
             waterfall([
-                (cb)=>{
-                    if(dto.userID)
-                    {
-                        let obj = new this.userModel();
-                        obj.email=dto.mail;
-                        obj.firstName=dto.fuser;
-                        obj.lastName=dto.luser;
-                        obj.phone=dto.phno;
-                        this.userModel.findByIdupdate()
-                    }
+                async (cb) => {
+                    let obj: any = {};
+                    obj.firstName = dto.fuser;
+                    obj.lastName = dto.luser;
+                    obj.phone = dto.phno;
+                    if (dto.userID) {
+                        console.log("cb1");
+                        const updatedCustomer = await this.userModel.findByIdAndUpdate(dto.userID, obj,
+                            { useFindAndModify: false }, (err, res) => {
+                                if (res)
+                            {    console.log("inside check",err,res)
+                              return cb(res)}
+
+                        
+                        })
+                        // console.log(updatedCustomer)
+                        
+                    }else
+                    return cb(null)
+
                 },
-                async (cb)=>{
-        console.log(dto, saltRounds);
-        let obj = new this.userModel();
-        let val;
-        obj.tokenval = await this.tokenGenerator();
-        obj.email=dto.mail;
-        obj.firstName=dto.fuser;
-        obj.lastName=dto.luser;
-        obj.phone=dto.phno;
+                async (cb) => {
+                    console.log("called cb2")
+                    console.log(dto, saltRounds);
+                    let obj = new this.userModel();
+                    let val;
+                    obj.tokenval = await this.tokenGenerator();
+                    obj.email = dto.mail;
+                    obj.firstName = dto.fuser;
+                    obj.lastName = dto.luser;
+                    obj.phone = dto.phno;
 
-        bcrypt.hash(dto.pass, saltRounds, async function (err, hash) {
-            // Store hash in your password DB.
-            obj.password = hash;
-            console.log(obj);
-            val = await obj.save();
-        });
+                    bcrypt.hash(dto.pass, saltRounds, async function (err, hash) {
+                        // Store hash in your password DB.
+                        obj.password = hash;
+                        console.log(obj);
+                        val = await obj.save();
+                    });
 
 
-        return "Registered Sucessfully";
-    }
-    ]),(err,res)=>{
-        if(err)
-        rejects(err)
-        else
-        resolve(res)
-    }
-    })
+                    return "Registered Sucessfully";
+                }
+            ]), (err, res) => {
+                // if (err)
+                //     rejects(err)
+                // else
+                console.log("main",res,err);
+                    resolve(res)
+            }
+        })
     }
 
 

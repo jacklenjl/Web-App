@@ -11,8 +11,9 @@ export class AuthController {
     ) { }
 
     @Post('register')
-    regUser(@Body() dto) {
-        return this.authService.registerUser(dto);
+    regUser(@Body() dto,@Res() res) {
+        console.log("called update")
+        return res.end(JSON.stringify(this.authService.registerUser(dto)));
     }
 
     // @SetCookies({ name: 'Authorization', value: 'Bearer 123' })
