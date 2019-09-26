@@ -1,5 +1,5 @@
 <ol start="1">
-  <li>To show case implementation of middle ware</li>
+  <li>To show case implementation of middleware</li>
   <li>Applied JWT authentication </li>
   <li>Writting Various CRUD APIs</li>
   <li>Implementation of request/response services and Cookies </li>
