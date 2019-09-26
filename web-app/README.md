@@ -6,6 +6,7 @@
   <li>Backend Database on MongoDB used with mongoose </li>
   <li>Impelemented Decorators</li>
   <li>Based on Async Waterfall</li>
+  <li>Implemented DotEnv </li>
   </ol>
 
 <p align="center">
