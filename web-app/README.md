@@ -1,3 +1,10 @@
+<ol start="1">
+  <li>To show case implementation of middle ware</li>
+  <li>Applied JWT authentication </li>
+  <li>Writting Various API</li>
+  <li>Impelementation of request/response services and Cookies </li>
+  </ol>
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
