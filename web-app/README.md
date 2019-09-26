@@ -5,6 +5,7 @@
   <li>Implementation of request/response services and Cookies </li>
   <li>Backend Database on MongoDB used with mongoose </li>
   <li>Impelemented Decorators</li>
+  <li>Based on Async Waterfall</li>
   </ol>
 
 <p align="center">
