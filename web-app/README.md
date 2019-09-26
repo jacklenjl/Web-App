@@ -1,8 +1,10 @@
 <ol start="1">
   <li>To show case implementation of middle ware</li>
   <li>Applied JWT authentication </li>
-  <li>Writting Various API</li>
-  <li>Impelementation of request/response services and Cookies </li>
+  <li>Writting Various CRUD APIs</li>
+  <li>Implementation of request/response services and Cookies </li>
+  <li>Backend Database on MongoDB used with mongoose </li>
+  <li>Impelemented Decorators</li>
   </ol>
 
 <p align="center">
