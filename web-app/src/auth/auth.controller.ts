@@ -1,18 +1,19 @@
 import { Controller, Get, Post, Body, Res, Req, Render } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Cookies, SignedCookies, SetCookies, ClearCookies } from '@nestjsplus/cookies';
-
-
+import {
+    Cookies,
+    SignedCookies,
+    SetCookies,
+    ClearCookies,
+} from '@nestjsplus/cookies';
 
 @Controller('auth')
 export class AuthController {
-    constructor(
-        private readonly authService: AuthService
-    ) { }
+    constructor(private readonly authService: AuthService) { }
 
     @Post('register')
-    regUser(@Body() dto,@Res() res) {
-        console.log("called update")
+    regUser(@Body() dto, @Res() res) {
+        console.log('called update');
         return res.end(JSON.stringify(this.authService.registerUser(dto)));
     }
 
@@ -22,27 +23,23 @@ export class AuthController {
     //     return 'welcome';
     // }
 
-
     @Post('login')
     async set(@Body() dto, @Res() res: any): Promise<any> {
-
         var val: any = {};
         val = await this.authService.loginUser(dto);
-        console.log("lllllll", val);
+        // console.log("lllllll", val);
         if (val != undefined && val[0]) {
-            res.cookie('Authorization', `Bearer ${val[0].tokenval} email ${val[0].email}`, { secure: false });
+            res.cookie('Authorization', `Bearer ${val}`, { secure: false });
             res.end(`welcome`);
+        } else {
+            res.end('Wrong email or password');
         }
-        else {
-            res.end("Wrong email or password");
-        }
-
     }
 
     @Get('hello')
     sendHello(@Cookies() cookies) {
-        console.log("cookie:", cookies);
-        return "hello";
+        console.log('cookie:', cookies);
+        return 'hello';
     }
 
     @ClearCookies('Authorization')
@@ -50,10 +47,5 @@ export class AuthController {
     @Render('logout')
     kill(@Res() res: any, @Cookies() cookies) {
         return { message: 'cookies killed!' };
-
     }
-
-
-
-
 }
