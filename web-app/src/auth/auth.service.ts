@@ -3,8 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Users } from '../database/interfaces/users.interface';
 import { JwtService } from '@nestjs/jwt';
-import { rejects } from 'assert';
-import { ApiResponse } from '../response';
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = parseInt(process.env.saltRounds);

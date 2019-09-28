@@ -1,9 +1,9 @@
-export class ApiResponse{
-    public static successResponse(resdata: any, msg: string) {
+export class AppResponse{
+    public static successResponse(respdata: any, msg: string) {
         return {
             success: true,
             message: msg,
-            data: resdata,
+            data: respdata,
         };
     }
 
