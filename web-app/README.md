@@ -1,3 +1,14 @@
+<ol start="1">
+  <li>To show case implementation of middleware</li>
+  <li>Applied JWT authentication </li>
+  <li>Writting Various CRUD APIs</li>
+  <li>Implementation of request/response services and Cookies </li>
+  <li>Backend Database on MongoDB used with mongoose </li>
+  <li>Impelemented Decorators</li>
+  <li>Based on Async Waterfall</li>
+  <li>Implemented DotEnv </li>
+  </ol>
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
@@ -47,18 +58,6 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 
 ## Support
 
